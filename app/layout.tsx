@@ -1,17 +1,26 @@
 // app/layout.tsx
+
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-export const metadata = {
+// Configure the Inter font
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
   title: "New Mexico Reggae Calendar",
-  description: "Your guide to the hottest reggae vibes across the Land of Enchantment",
+  description: "Discover reggae shows, festivals, and cultural gatherings across New Mexico.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className="bg-brand-blue text-white min-h-screen">
-        {children}
-      </body>
+      {/* Apply the font class to the body */}
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
