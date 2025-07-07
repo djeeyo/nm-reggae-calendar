@@ -1,27 +1,33 @@
 // app/api/events/upload/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import Papa from 'papaparse';
-import type { Event } from '../../../../types/event';
 
+// Run this route in the Edge runtime so `formData()` and `File` are available
+export const runtime = 'edge';
+
+// Disable Next.js’s built-in JSON parser so we can handle multipart forms
 export const config = {
   api: {
-    bodyParser: false   // we’re handling multipart/form-data ourselves
-  }
+    bodyParser: false,
+  },
 };
+
+import type { Event } from '@/types/events';
+import { NextRequest, NextResponse } from 'next/server';
+import * as Papa from 'papaparse';
+
 
 let EVENTS: Event[] = [];
 
 export async function POST(req: NextRequest) {
-  const contentType = req.headers.get('content-type') ?? '';
+  const contentType = req.headers.get('content-type') || '';
 
-  // — JSON payload? just push it in
+  // If the client sent JSON, just parse and push it
   if (contentType.includes('application/json')) {
     const data = (await req.json()) as Event;
     EVENTS.push(data);
     return NextResponse.json({ ok: true });
   }
 
-  // — multipart/form-data? parse the uploaded CSV
+  // Otherwise expect a multipart/form-data upload with a `file` field
   const formData = await req.formData();
   const file = formData.get('file');
   if (!file || !(file instanceof File)) {
@@ -29,16 +35,20 @@ export async function POST(req: NextRequest) {
   }
 
   const text = await file.text();
-  const { data, errors } = Papa.parse<Event>(text, { header: true });
+  const { data, errors } = Papa.parse<Event>(text, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
   if (errors.length > 0) {
     return NextResponse.json({ errors }, { status: 400 });
   }
 
-  // override in‐memory store
+  // Replace in-memory events with parsed CSV rows
   EVENTS = data as Event[];
   return NextResponse.json({
     message: 'Events uploaded',
-    count: EVENTS.length
+    count: EVENTS.length,
   });
 }
 
