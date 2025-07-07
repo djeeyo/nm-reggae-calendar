@@ -1,12 +1,13 @@
-// app/page.tsx (POLISHED)
+// app/page.tsx
 
 import { EventCard } from "@/components/EventCard";
-import { eventsData } from "@/lib/events";
-import type { Event } from "@/lib/events";
+import { getAllEvents } from "@/lib/events";      // <-- Import the FUNCTION
+import type { Event } from "@/types/events";      // <-- Import the TYPE from the correct file
 
+// The grouping function is great, let's keep it here.
 function groupEventsByCity(events: Event[]) {
   return events.reduce((acc, event) => {
-    const city = event.city;
+    const city = event.city || "Other"; // Handle events that might not have a city
     if (!acc[city]) {
       acc[city] = [];
     }
@@ -16,47 +17,55 @@ function groupEventsByCity(events: Event[]) {
 }
 
 export default function HomePage() {
-  const groupedEvents = groupEventsByCity(eventsData);
+  // Call the function to get the array of event objects
+  const allEvents = getAllEvents(); 
+  const groupedEvents = groupEventsByCity(allEvents);
 
   return (
-    // Make sure the gradient is applied here!
-    <div className="bg-brand-gradient">
-      <main className="min-h-screen container mx-auto px-4">
-        {/* --- HERO SECTION --- */}
-        <section className="text-center py-20">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">New Mexico Reggae Calendar</h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-neutral-700">
-            Discover reggae shows, festivals, and cultural gatherings across the Land of Enchantment.
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <button className="bg-rasta-yellow text-brand-blue font-bold py-3 px-6 rounded-md hover:scale-105 transition-transform">
-              Explore Events
-            </button>
-          </div>
-        </section>
+    // The main layout already has the gradient, so we don't need a wrapper div here.
+    // The <main> tag is also in layout.tsx, so we can remove it from here to avoid nesting.
+    <>
+      {/* --- HERO SECTION --- */}
+      <section className="text-center py-16 md:py-20">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 tracking-tight">
+          Reggae Events <span className="text-rasta-yellow">in New Mexico</span>
+        </h1>
+        <p className="mt-4 max-w-2xl mx-auto text-lg text-neutral-700">
+          Discover reggae shows, festivals, and cultural gatherings across the Land of Enchantment.
+        </p>
+        <div className="mt-8 flex justify-center gap-4">
+          <a href="#upcoming-events" className="bg-rasta-yellow text-brand-blue font-bold py-3 px-6 rounded-md shadow-lg transition-transform hover:scale-105">
+            Explore Events
+          </a>
+        </div>
+      </section>
 
-        {/* --- UPCOMING EVENTS SECTION --- */}
-        <section className="pb-16">
-          <h2 className="text-3xl font-bold text-white mb-2">Upcoming Events</h2>
-          <p className="text-neutral-600 mb-8">{eventsData.length} events found</p>
-          
-          <div className="space-y-12">
-            {Object.entries(groupedEvents).map(([city, events]) => (
-              <div key={city}>
-                <div className="flex items-center gap-4 mb-4">
-                  <h3 className="text-2xl font-bold text-rasta-yellow">{city}</h3>
-                  <div className="h-px flex-grow bg-neutral-500/30"></div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {events.map((event) => (
-                    <EventCard key={event.eventName + event.date} event={event} />
-                  ))}
-                </div>
+      {/* --- UPCOMING EVENTS SECTION --- */}
+      <section id="upcoming-events" className="pb-16">
+        <div className="flex items-baseline justify-between mb-8">
+            <div>
+              <h2 className="text-3xl font-bold text-neutral-900 mb-1">Upcoming Events</h2>
+              <p className="text-neutral-600">{allEvents.length} events found</p>
+            </div>
+            {/* The filters component can go here later */}
+        </div>
+        
+        <div className="space-y-12">
+          {Object.entries(groupedEvents).map(([city, events]) => (
+            <div key={city}>
+              <div className="flex items-center gap-4 mb-6">
+                <h3 className="text-2xl font-bold text-rasta-yellow">{city}</h3>
+                <div className="h-px flex-grow bg-neutral-500/30"></div>
               </div>
-            ))}
-          </div>
-        </section>
-      </main>
-    </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {events.map((event) => (
+                  <EventCard key={event.id} event={event} /> // Use the unique ID for the key
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
