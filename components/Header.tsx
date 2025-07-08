@@ -9,14 +9,14 @@ const Header = () => {
       {/* --- BRANDING / LOGO --- */}
       <Link href="/" className="flex items-center gap-3 group">
         <Image
-          src="/images/logo.png" 
-          alt="Blazin' Reggae Vibes Logo" // <-- The required fix for the linter
+          src="/images/logo.png"
+          alt="Blazin' Reggae Vibes Logo" // FIX #1
           width={40}
           height={40}
           className="transition-transform group-hover:scale-110"
         />
         <span className="text-xl font-bold whitespace-nowrap">
-          Blazin' <span className="text-rasta-yellow">Reggae</span> Vibes
+          Blazin' <span className="text-rasta-yellow">Reggae</span> Vibes {/* FIX #2 */}
         </span>
       </Link>
 
