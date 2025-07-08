@@ -1,31 +1,25 @@
 // app/about/page.tsx
 
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
-// SEO Metadata for the page
 export const metadata: Metadata = {
-  title: 'About | Blazin\' Reggae Vibes NM',
+  title: 'About | Blazin' Reggae Vibes NM', // THE FIX IS HERE
   description: 'Learn about the mission, crew, and vision behind the New Mexico Reggae Calendar.',
 };
 
-// A small, reusable component for consistent section headers
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-3xl font-bold text-rasta-yellow mb-4">{children}</h2>
 );
 
 export default function AboutPage() {
   return (
-    // Main container to center content and improve readability on wide screens
-    <div className="max-w-4xl mx-auto text-neutral-700 leading-relaxed space-y-12">
+    <div className="max-w-4xl mx-auto text-neutral-700 leading-relaxed space-y-12 py-12">
       
-      {/* --- Main Header Section --- */}
       <section className="text-center">
         <h1 className="text-4xl font-extrabold text-white mb-2">About New Mexico Reggae Calendar</h1>
         <p className="text-xl font-medium text-neutral-600">One Love, One State, One Vibe</p>
       </section>
 
-      {/* --- Intro & Mission Statement --- */}
       <section>
         <p>
           Welcome to the <strong className="text-neutral-900">New Mexico Reggae Calendar</strong>—your up-to-date guide to every reggae, ska, roots-dub, and dancehall happening across the Land of Enchantment. Whether you're catching a roots legend at Tumbleroot, skanking under the Taos stars, or discovering a local band in Las Cruces, our mission is simple:
@@ -37,7 +31,6 @@ export default function AboutPage() {
 
       <hr className="border-neutral-500/30" />
 
-      {/* --- Our Mission Section --- */}
       <section>
         <SectionHeader>Our Mission</SectionHeader>
         <ol className="list-decimal list-inside space-y-4">
@@ -47,7 +40,6 @@ export default function AboutPage() {
         </ol>
       </section>
 
-      {/* --- What We Do Section --- */}
       <section>
         <SectionHeader>What We Do</SectionHeader>
         <ul className="list-disc list-inside space-y-2">
@@ -60,7 +52,6 @@ export default function AboutPage() {
       
       <hr className="border-neutral-500/30" />
 
-      {/* --- Why New Mexico? & The Crew --- */}
       <section>
         <SectionHeader>Why New Mexico?</SectionHeader>
         <p>From Albuquerque's storied venues to Santa Fe's outdoor plazas, Taos mesa sunsets, and border-town sounds down in Las Cruces, the 505 & 575 are bursting with creativity. We're here to document it all, champion local promoters, and prove reggae thrives far beyond the island shores.</p>
@@ -77,7 +68,6 @@ export default function AboutPage() {
 
       <hr className="border-neutral-500/30" />
       
-      {/* --- Call to Action & Socials --- */}
       <section>
         <SectionHeader>Submit Your Event</SectionHeader>
         <p>Hosting a reggae-flavored gathering? Drop us the details at <a href="mailto:events@nmreggaecalendar.com" className="text-rasta-yellow hover:underline">events@nmreggaecalendar.com</a> or use the CSV upload in the Admin Panel (promoters only). We review every submission to keep the calendar accurate and spam-free.</p>
@@ -95,7 +85,6 @@ export default function AboutPage() {
       
       <hr className="border-neutral-500/30" />
 
-      {/* --- Love & Respect --- */}
       <section className="text-center">
         <SectionHeader>Love & Respect</SectionHeader>
         <p>Reggae teaches peace, upliftment, and justice. We stand against bigotry, racism, and oppression in every form. All are welcome here—just bring positive energy, respect for one another, and a willingness to dance.</p>
