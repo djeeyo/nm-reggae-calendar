@@ -2,8 +2,9 @@
 
 import type { Metadata } from 'next';
 
+// FIX TYPE 1: Use backslash escape for JS strings
 export const metadata: Metadata = {
-  title: 'About | Blazin\' Reggae Vibes NM', // THE FIX IS HERE
+  title: 'About | Blazin\' Reggae Vibes NM',
   description: 'Learn about the mission, crew, and vision behind the New Mexico Reggae Calendar.',
 };
 
@@ -13,6 +14,7 @@ const SectionHeader = ({ children }: { children: React.ReactNode }) => (
 
 export default function AboutPage() {
   return (
+    // FIX TYPE 2: Use ' for visible JSX content
     <div className="max-w-4xl mx-auto text-neutral-700 leading-relaxed space-y-12 py-12">
       
       <section className="text-center">
