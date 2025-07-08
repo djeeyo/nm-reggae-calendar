@@ -2,36 +2,42 @@
 import fs from 'fs';
 import path from 'path';
 import Papa from 'papaparse';
-import type { Event } from '@/types/events'; // It now imports the updated type
+import type { Event } from '@/types/events';
+
+// Define a type for the raw CSV row to avoid using 'any'
+type CsvRow = {
+  [key: string]: string;
+};
 
 export function getAllEvents(): Event[] {
   const csvFilePath = path.join(process.cwd(), 'New_Mexico_Reggae_Concerts_2025_updated.csv');
   const fileContent = fs.readFileSync(csvFilePath, 'utf8');
 
-  // We use a transformHeader function to clean up the column names from the CSV
-  const { data } = Papa.parse(fileContent, {
+  // Parse the data and tell PapaParse to expect our CsvRow type
+  const parseResult = Papa.parse<CsvRow>(fileContent, {
     header: true,
     skipEmptyLines: true,
-    transformHeader: (header) => header.trim().replace(/ /g, ''), // "Event Name" -> "EventName"
   });
 
-  const events = data.map((row: any, index: number) => ({
-    // Map the transformed CSV headers to your Event type properties
-    id: `${row.EventName}-${row.Date}-${index}`, // Create a more robust unique ID
-    eventName: row.EventName,
-    date: row.Date,
-    time: row.Time,
-    venue: row.Venue,
-    city: row.City,
-    state: row.State,
-    performingArtists: row.PerformingArtists,
-    primaryGenre: row.PrimaryGenre,
-    ageRestriction: row.AgeRestriction,
-    ticketPriceCost: row['TicketPrice/Cost'], // Accessing the original header name here
-    sourceUrl: row.SourceURL,
-    notes: row.Notes,
-  })) as Event[];
+  const events = parseResult.data.map((row, index) => {
+    // Map the CSV headers to your Event type properties using bracket notation
+    return {
+      id: `${row['Event Name'] || 'event'}-${row['Date'] || index}`,
+      eventName: row['Event Name'] || '',
+      date: row['Date'] || '',
+      time: row['Time'] || '',
+      venue: row['Venue'] || '',
+      city: row['City'] || '',
+      state: row['State'] || '',
+      performingArtists: row['Performing Artists'] || '',
+      primaryGenre: row['Primary Genre'] || '',
+      ageRestriction: row['Age Restriction'] || '',
+      ticketPriceCost: row['Ticket Price/Cost'] || '',
+      sourceUrl: row['Source URL'] || '',
+      notes: row['Notes'] || '',
+    };
+  }) as Event[];
 
-  // Filter out any potentially empty rows that might have been parsed
-  return events.filter(event => event.eventName);
+  // Filter out any rows that didn't have an event name
+  return events.filter(event => event && event.eventName);
 }
