@@ -27,9 +27,16 @@ export default function HomePage() {
     <>
       {/* --- HERO SECTION --- */}
       <section className="text-center py-16 md:py-20">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 tracking-tight">
-          Reggae Events <span className="text-rasta-yellow">in New Mexico</span>
-        </h1>
+        {/* This is the NEW code block to paste in */}
+<h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+  <span className="text-rasta-yellow">Reggae</span>
+  {' '}
+  <span className="bg-gradient-to-r from-rasta-red to-rasta-green bg-clip-text text-transparent">
+    Events
+  </span>
+  {' '}
+  in New Mexico
+</h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-neutral-700">
           Discover reggae shows, festivals, and cultural gatherings across the Land of Enchantment.
         </p>
