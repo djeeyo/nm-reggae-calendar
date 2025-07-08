@@ -1,6 +1,13 @@
 // tailwind.config.js
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  // ... other config
+  // This content property is essential. It tells Tailwind where to look for class names.
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     extend: {
       colors: {
@@ -15,7 +22,6 @@ module.exports = {
         'neutral-500': '#26314F', // For card backgrounds
         'neutral-400': '#2E3A5F',
       },
-      // ... other extensions
     },
   },
   plugins: [],
