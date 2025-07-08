@@ -10,7 +10,7 @@ type CsvRow = {
 };
 
 export function getAllEvents(): Event[] {
-  const csvFilePath = path.join(process.cwd(), 'New_Mexico_Reggae_Concerts_2025_updated.csv');
+  const csvFilePath = path.join(process.cwd(), 'public', 'New_Mexico_Reggae_Concerts_2025_updated.csv');
   const fileContent = fs.readFileSync(csvFilePath, 'utf8');
 
   // Parse the data and tell PapaParse to expect our CsvRow type
