@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About | Blazin' Reggae Vibes NM', // THE FIX IS HERE
+  title: 'About | Blazin\' Reggae Vibes NM', // THE FIX IS HERE
   description: 'Learn about the mission, crew, and vision behind the New Mexico Reggae Calendar.',
 };
 
