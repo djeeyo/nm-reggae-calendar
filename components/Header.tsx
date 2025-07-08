@@ -1,23 +1,18 @@
 // components/Header.tsx
 
 import Link from 'next/link';
-import Image from 'next/image'; // <-- Step 1: Import the Image component
+import Image from 'next/image';
 
 const Header = () => {
   return (
     <header className="container mx-auto flex items-center justify-between p-4 text-neutral-900">
       {/* --- BRANDING / LOGO --- */}
       <Link href="/" className="flex items-center gap-3 group">
-        {/* 
-          Step 2: Use the Image component. 
-          - Update src to your logo's path.
-          - Adjust width and height to match your logo's aspect ratio.
-        */}
         <Image
-          src="/images/logo.png" // IMPORTANT: Change this to your actual logo file path
-          alt="Blazin' Reggae Vibes Logo"
-          width={40}  // Change this to your desired width
-          height={40} // Change this to your desired height
+          src="/images/logo.png" 
+          alt="Blazin' Reggae Vibes Logo" // <-- The required fix for the linter
+          width={40}
+          height={40}
           className="transition-transform group-hover:scale-110"
         />
         <span className="text-xl font-bold whitespace-nowrap">
