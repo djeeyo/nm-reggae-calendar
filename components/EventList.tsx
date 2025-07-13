@@ -6,7 +6,7 @@ import { EventCard } from "@/components/EventCard";
 import type { Event } from "@/types/events";
 import { List, CalendarDays } from 'lucide-react';
 
-// --- Re-usable data grouping functions ---
+// --- Data grouping functions ---
 function groupEventsByCityAndMonth(events: Event[]): Record<string, Record<string, Event[]>> {
   return events.reduce((acc, event) => {
     const city = event.city || "TBD";
@@ -67,19 +67,48 @@ export default function EventList({ allEvents }: { allEvents: Event[] }) {
           </div>
       </div>
       
+      {/* --- THIS IS THE FULL CONDITIONAL RENDERING BLOCK --- */}
       {viewMode === 'city' ? (
         <div className="space-y-16">
           {Object.entries(cityGroupedEvents).map(([city, months]) => (
-            // ... City view rendering logic ...
+            <div key={city}>
+              <div className="flex items-center gap-4 mb-6">
+                <h3 className="text-2xl font-bold text-rasta-yellow">{city}</h3>
+                <div className="h-px flex-grow bg-neutral-500/30"></div>
+              </div>
+              <div className="space-y-8">
+                {Object.keys(months).sort((a,b) => new Date(a).getTime() - new Date(b).getTime()).map(month => (
+                  <div key={month}>
+                    <h4 className="text-lg font-semibold text-neutral-600 mb-4 tracking-wide">{month.toUpperCase()}</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {months[month].map((event) => (<EventCard key={event.id} event={event} />))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       ) : (
         <div className="space-y-12">
-          {Object.keys(monthGroupedEvents).sort((a,b) => new Date(a).getTime() - new Date(b).getTime()).map(month => (
-            // ... Month view rendering logic ...
+          {Object.keys(monthGroupedEvents)
+            .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+            .map(month => (
+              <div key={month}>
+                <div className="flex items-center gap-4 mb-6">
+                  <h3 className="text-2xl font-bold text-rasta-yellow">{month}</h3>
+                  <div className="h-px flex-grow bg-neutral-500/30"></div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {monthGroupedEvents[month].map((event) => (
+                    <EventCard key={event.id} event={event} />
+                  ))}
+                </div>
+              </div>
           ))}
         </div>
       )}
+      {/* --- END OF CONDITIONAL BLOCK --- */}
     </section>
   );
 }
