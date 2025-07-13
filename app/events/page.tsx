@@ -1,4 +1,5 @@
-// app/about/page.tsx
+// app/page.tsx
+
 export default function EventsPage() {
   return (
     <main className="container mx-auto p-8">
