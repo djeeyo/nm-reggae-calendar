@@ -1,39 +1,30 @@
 // components/Header.tsx
+// Add your InstallButton into the global header/navigation
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import { InstallButton } from "@/components/InstallButton";
 
-const Header = () => {
+export default function Header() {
   return (
-    <header className="container mx-auto flex items-center justify-between p-4 text-neutral-900">
-      <Link href="/" className="flex items-center gap-3 group">
-        <Image
-          src="/images/logo.png"
-          alt="Blazin' Reggae Vibes Logo" // This fix is correct
-          width={40}
-          height={40}
-          className="transition-transform group-hover:scale-110"
-        />
-        {/*
-          THE NEW FIX IS HERE: We use a JavaScript string in curly braces
-          to handle the apostrophe safely.
-        */}
-        <span className="text-xl font-bold whitespace-nowrap">
-          {'Blazin\' '}
-          <span className="text-rasta-yellow">Reggae</span>
-          {' Vibes'}
-        </span>
+    <header className="bg-brand-blue text-white flex items-center justify-between px-6 py-4">
+      {/* Site Logo/Title */}
+      <Link href="/" className="text-xl font-bold">
+        Jah Vibes NM
       </Link>
 
-      <nav className="flex items-center gap-6">
-        <Link href="/" className="hover:text-rasta-yellow transition-colors">Events</Link>
-        <Link href="/about" className="hover:text-rasta-yellow transition-colors">About</Link>
-        <a href="/admin" className="bg-rasta-yellow text-brand-blue font-bold py-2 px-4 rounded-md shadow-lg transition-transform hover:scale-105">
-          Sign In
-        </a>
+      {/* Navigation Links + Install Button */}
+      <nav className="flex items-center space-x-4">
+        <Link href="/" className="hover:underline">
+          Home
+        </Link>
+        <Link href="/events" className="hover:underline">
+          Events
+        </Link>
+        {/* Add more nav links here as needed */}
+
+        {/* PWA Install CTA */}
+        <InstallButton />
       </nav>
     </header>
   );
-};
-
-export default Header;
+}
