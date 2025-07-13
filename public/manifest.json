@@ -1,0 +1,29 @@
+{
+  "name": "Jah Vibes NM | New Mexico Reggae Calendar",
+  "short_name": "Jah Vibes NM",
+  "description": "Discover reggae shows, festivals, and cultural gatherings across New Mexico.",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1a237e",
+  "theme_color": "#1a237e"
+}
