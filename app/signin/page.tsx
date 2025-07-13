@@ -1,10 +1,12 @@
-// app/page.tsx
+// app/signin/page.tsx
 
-export default function EventsPage() {
+export default function SignInPage() {
   return (
-    <main className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold">Events</h1>
-      {/* your events listing code */}
-    </main>
+    <div className="text-center py-20">
+      <h1 className="text-4xl font-bold text-white">Sign In</h1>
+      <p className="mt-4 text-lg text-neutral-700">
+        Admin sign-in coming soon.
+      </p>
+    </div>
   );
 }
