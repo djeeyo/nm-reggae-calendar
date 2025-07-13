@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About | Blazin\' Reggae Vibes NM',
+  title: 'About | Blazin\' Reggae Vibes NM', // Using \' for JS strings
   description: 'Learn about the mission, crew, and vision behind the New Mexico Reggae Calendar.',
 };
 
@@ -13,6 +13,7 @@ const SectionHeader = ({ children }: { children: React.ReactNode }) => (
 
 export default function AboutPage() {
   return (
+    // Using ' for visible JSX content
     <div className="max-w-4xl mx-auto text-neutral-700 leading-relaxed space-y-12 py-12">
       
       <section className="text-center">
@@ -39,11 +40,9 @@ export default function AboutPage() {
           <li><strong className="text-neutral-900">Celebrate the Culture</strong> – Honor reggae's roots in resistance, unity, and upliftment while embracing the Southwest's unique flavor.</li>
         </ol>
       </section>
-      
-      {/* ... and so on for the rest of the About page content ... */}
-      
-      <hr className="border-neutral-500/30" />
-      
+
+      {/* ... and so on ... */}
+
       <section className="text-center">
         <SectionHeader>Love & Respect</SectionHeader>
         <p>Reggae teaches peace, upliftment, and justice. We stand against bigotry, racism, and oppression in every form. All are welcome here—just bring positive energy, respect for one another, and a willingness to dance.</p>
