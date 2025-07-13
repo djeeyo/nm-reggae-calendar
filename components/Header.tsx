@@ -11,10 +11,10 @@ export default function Header() {
       {/* Logo + Site Title */}
       <Link href="/" className="flex items-center space-x-2">
         <Image
-          src="/logo-icon.svg"         // ← put your icon in /public/logo-icon.svg
-          alt="Blazin' Reggae Vibes"
-          width={32}
-          height={32}
+            src="/images/logo.png" // This path must exactly match the file's location in /public
+            alt="Blazin' Reggae Vibes Logo"
+            width={40} // Or your desired width
+            height={40} // Or your desired height
         />
         <span className="text-lg font-bold">Blazin’ Reggae Vibes</span>
       </Link>
