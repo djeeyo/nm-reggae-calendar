@@ -1,42 +1,52 @@
 // app/page.tsx
 
 import { EventCard } from "@/components/EventCard";
-import { getAllEvents } from "@/lib/events";      // <-- Import the FUNCTION
-import type { Event } from "@/types/events";      // <-- Import the TYPE from the correct file
+import { getAllEvents } from "@/lib/events";
+import type { Event } from "@/types/events";
 
-// The grouping function is great, let's keep it here.
-function groupEventsByCity(events: Event[]) {
+// --- NEW, MORE ADVANCED GROUPING FUNCTION ---
+function groupEventsByCityAndMonth(events: Event[]): Record<string, Record<string, Event[]>> {
   return events.reduce((acc, event) => {
-    const city = event.city || "Other"; // Handle events that might not have a city
+    // Ensure there's a fallback for events without a city
+    const city = event.city || "TBD";
+    
+    // Create a date object and a key for the month (e.g., "July 2025")
+    const eventDate = new Date(event.date);
+    const monthKey = eventDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+    // Create the city key if it doesn't exist
     if (!acc[city]) {
-      acc[city] = [];
+      acc[city] = {};
     }
-    acc[city].push(event);
+    // Create the month key within the city if it doesn't exist
+    if (!acc[city][monthKey]) {
+      acc[city][monthKey] = [];
+    }
+
+    // Add the event to the correct city and month
+    acc[city][monthKey].push(event);
+    
     return acc;
-  }, {} as Record<string, Event[]>);
+  }, {} as Record<string, Record<string, Event[]>>);
 }
 
 export default function HomePage() {
-  // Call the function to get the array of event objects
   const allEvents = getAllEvents(); 
-  const groupedEvents = groupEventsByCity(allEvents);
+  const groupedEvents = groupEventsByCityAndMonth(allEvents);
 
   return (
-    // The main layout already has the gradient, so we don't need a wrapper div here.
-    // The <main> tag is also in layout.tsx, so we can remove it from here to avoid nesting.
     <>
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION (No changes needed here) --- */}
       <section className="text-center py-16 md:py-20">
-        {/* This is the NEW code block to paste in */}
-<h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
-  <span className="text-rasta-yellow">Reggae</span>
-  {' '}
-  <span className="bg-gradient-to-r from-rasta-red to-rasta-green bg-clip-text text-transparent">
-    Events
-  </span>
-  {' '}
-  in New Mexico
-</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+          <span className="text-rasta-yellow">Reggae</span>
+          {' '}
+          <span className="bg-gradient-to-r from-rasta-red to-rasta-green bg-clip-text text-transparent">
+            Events
+          </span>
+          {' '}
+          in New Mexico
+        </h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-neutral-700">
           Discover reggae shows, festivals, and cultural gatherings across the Land of Enchantment.
         </p>
@@ -47,26 +57,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- UPCOMING EVENTS SECTION --- */}
+      {/* --- UPCOMING EVENTS SECTION (This is where the rendering logic is updated) --- */}
       <section id="upcoming-events" className="pb-16">
         <div className="flex items-baseline justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-neutral-900 mb-1">Upcoming Events</h2>
+              <h2 className="text-3xl font-bold text-white mb-1">Upcoming Events</h2>
               <p className="text-neutral-600">{allEvents.length} events found</p>
             </div>
-            {/* The filters component can go here later */}
         </div>
         
-        <div className="space-y-12">
-          {Object.entries(groupedEvents).map(([city, events]) => (
+        <div className="space-y-16">
+          {/* Outer loop for cities */}
+          {Object.entries(groupedEvents).map(([city, months]) => (
             <div key={city}>
               <div className="flex items-center gap-4 mb-6">
                 <h3 className="text-2xl font-bold text-rasta-yellow">{city}</h3>
                 <div className="h-px flex-grow bg-neutral-500/30"></div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {events.map((event) => (
-                  <EventCard key={event.id} event={event} /> // Use the unique ID for the key
+
+              <div className="space-y-8">
+                {/* Inner loop for months, sorted chronologically */}
+                {Object.keys(months)
+                  .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+                  .map(month => (
+                    <div key={month}>
+                      <h4 className="text-lg font-semibold text-neutral-600 mb-4 tracking-wide">{month.toUpperCase()}</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {/* Final loop to render the event cards for that month */}
+                        {months[month].map((event) => (
+                          <EventCard key={event.id} event={event} />
+                        ))}
+                      </div>
+                    </div>
                 ))}
               </div>
             </div>
