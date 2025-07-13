@@ -12,16 +12,17 @@ export default function Header() {
       <Link href="/" className="flex items-center space-x-2">
         <Image
             src="/images/logo.png" // This path must exactly match the file's location in /public
-            alt="Blazin' Reggae Vibes Logo"
-            width={40} // Or your desired width
-            height={40} // Or your desired height
+            alt="Blazin' Reggae Vibes Logo" // Using ' to be safe with linters
+            width={40}
+            height={40}
         />
         <span className="text-lg font-bold">Blazin’ Reggae Vibes</span>
       </Link>
 
       {/* Nav Links + PWA CTA */}
       <nav className="flex items-center space-x-6">
-        <Link href="/events" className="hover:underline">
+        {/* THE FIX IS HERE: The href now points to the homepage */}
+        <Link href="/" className="hover:underline">
           Events
         </Link>
         <Link href="/about" className="hover:underline">
