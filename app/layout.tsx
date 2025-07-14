@@ -8,8 +8,9 @@ import Header from '@/components/Header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Blazin\' Reggae Vibes | New Mexico Reggae Calendar',
+  title: 'Blazin\' Reggae Vibes NM | New Mexico Reggae Calendar',
   description: 'Discover reggae shows, festivals, and cultural gatherings across New Mexico.',
+  manifest: '/manifest.json', // <-- Ensure this line is present
 };
 
 export default function RootLayout({

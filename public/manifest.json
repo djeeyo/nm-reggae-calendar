@@ -1,21 +1,21 @@
+// public/manifest.json
 {
   "name": "Blazin' Reggae Vibes NM",
   "short_name": "Reggae NM",
-  "description": "Your guide to reggae events in New Mexico.",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0A1F44",
-  "theme_color": "#1E2A5C",
   "icons": [
     {
-      "src": "/images/logo-icon-192.png",
+      "src": "/android-chrome-192x192.png", // <--- UPDATED PATH
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/logo-icon-512.png",
+      "src": "/android-chrome-512x512.png", // <--- UPDATED PATH
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "theme_color": "#1E2A5C",
+  "background_color": "#0A1F44",
+  "display": "standalone",
+  "start_url": "/"
 }
